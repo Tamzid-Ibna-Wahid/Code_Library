@@ -8,7 +8,7 @@ int main(){
       vector<int>v(n);
     for(int i=0;i<n;i++)cin>>v[i];
 
-    int range = accumulate(v.begin().b.end(),0ll);
+    int range = accumulate(v.begin(),v.end(),0ll);
     
       bool dp[n+1][range+1];  // dp[i][j]  for array size i does there a subset_sum j ?
 
@@ -32,9 +32,9 @@ int main(){
 
    int mn_dif = INT_MAX;
 
-   for(int i = 1 ; i<=(range/2);i++){
-    if(dp[n][i])
-    mn_dif = min(mn_dif , range - (2*i));
+   for(int j = 1 ; j<=(range/2);j++){
+    if(dp[n][j])
+    mn_dif = min(mn_dif , range - (2*j));
    }
    
 
