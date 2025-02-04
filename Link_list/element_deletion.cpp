@@ -51,8 +51,8 @@ node* removeTail(node* head){
     return head;
 }
 
-node* removeK(node* head, int k){
-   if(head == nullptr) return head;
+node* remove_Kth_element(node* head, int k){
+   if(head == nullptr) return head;  // it is nullptr
    if(k == 1){
      node* temp = head;
     head = head->next;
@@ -114,11 +114,12 @@ signed main(){
       node* head = convertArrtoLL(v);
       
       
-      // delete the head
+    //   delete the head
           node* new_head = removeHead(head);
           cout<<new_head->data<<endl;
           
-    
+          
+   
     // delete lail    
      head = removeTail(head);
     print(head);
@@ -126,13 +127,18 @@ signed main(){
     
     // delete kth_element
        
-       head = removeK(head,4);
+       head = remove_Kth_element(head,4);
        print(head); 
        
        
     // remove_element;
        head = removeElement(head,3);
        print(head);
+       
+       
+   
+    
+    
    
     
     
