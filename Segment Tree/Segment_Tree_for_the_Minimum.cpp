@@ -10,7 +10,7 @@ struct segtree{
   void init(int n){
     size = 1;
     while(size < n) size *= 2;
-    tree.assign(2 * size , INT_MAX);
+    tree.assign(2 * size , INT_MAX);   // c
   }
   
   
@@ -24,7 +24,7 @@ struct segtree{
     int m = (lx + rx) / 2;
     build(a , 2 * x+1 , lx , m);
     build(a , 2 * x+2 , m , rx);
-    tree[x] = min(tree[2 * x +1],tree[2 * x +2]);
+    tree[x] = min(tree[2 * x +1],tree[2 * x +2]);    // c
   }
     
   void build(vector<int> &a){
@@ -46,7 +46,7 @@ struct segtree{
     else{
       set(i , v , 2 * x + 2, m , rx);
     }
-    tree[x] = min(tree[2 * x + 1] , tree[2 * x + 2]);
+    tree[x] = min(tree[2 * x + 1] , tree[2 * x + 2]);   // c
     }
     
     
@@ -61,7 +61,7 @@ struct segtree{
     int m = (lx + rx) / 2;
     int s1 = calc(l, r, 2 * x + 1, lx, m);
     int s2 = calc(l, r, 2 * x + 2, m, rx);
-    return min(s1,s2);
+    return min(s1,s2);                         // c
   }
   
   int calc(int l, int r){
