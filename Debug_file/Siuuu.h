@@ -8,27 +8,28 @@
 
 using namespace std;
 using namespace __gnu_pbds;
-typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;  // less ,less_equal , greater, greater_equal, cmp, *a.find_by_order() , order_of_key()
 typedef long long ll;
 typedef long l;
 typedef long double ld;
 typedef unsigned long long ull;
 typedef long double lld;
-
 #define endl "\n"
-#define REPn(i, n) for (ll i = 0; i < n; i++)
-#define REPsn(i, s, n) for (ll i = s; i <= n; i++)
-#define fast_cin() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
-#define yes cout << "YES" << endl
-#define no cout << "NO" << endl
+#define vin vector<int>
+#define pr pair<int, int>
+#define REPn(i,n) for(ll i = 0; i < n; i++) 
+#define REPsn(i,s,n) for(ll i = s; i <= n; i++)
+#define fast_cin() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define yes cout<<"YES"<<endl
+#define no cout<<"NO"<<endl
 #define int long long
 #define em emplace_back
-#define mp make_pair
-#define pb push_back
+#define mp make_pair 
+#define pb push_back 
 #define fi first
 #define se second
 #define all(x) (x).begin(), (x).end()
-#define sz(x) ((ll)(x).size())
+#define sz(x) ((ll)(x).size()) 
 #define INF 2000000000000000000
 
 // Debugging Macros (Disabled in Online Judge)

@@ -45,5 +45,7 @@ int main(){
         g[x].push_back({y,wt});  // directed graph
     }
     
+    dijkstra(0);
+    
     return 0;
 }

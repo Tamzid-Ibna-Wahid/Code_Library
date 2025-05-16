@@ -34,3 +34,8 @@ signed main() {
 
     return 0;
 }
+
+
+/*
+This is needed for Rabin_karp
+*/

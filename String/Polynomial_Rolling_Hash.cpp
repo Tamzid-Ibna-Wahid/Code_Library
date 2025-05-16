@@ -6,7 +6,7 @@ typedef long long ll;
 const ll mod = 1e9+7;
 
 
-int getHash(string str){
+int getHash(string &str){
     int value = 0;
     int p = 31;    // power should be greater then the charecter set and need to be prime
     int p_power = 1;
@@ -17,6 +17,11 @@ int getHash(string str){
     }
     return value;
 }
+
+/*
+This is needed for Rabin_karp
+*/
+
 
 
 signed main() {

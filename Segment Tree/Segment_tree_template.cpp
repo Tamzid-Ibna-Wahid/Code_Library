@@ -143,7 +143,7 @@ void siuuuuu(){
        st.init(n);
        st.build(v);
        
-       int x = st.calc(l,r);  // [l, r)
+       int x = st.calc(l,r);  // [l, r)   and it is 0 based indexing
      
         
 
