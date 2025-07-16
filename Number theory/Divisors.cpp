@@ -7,16 +7,16 @@ typedef long long ll;
    const int N = 1e6+10;     // 1e7 kora jabe na. calculation onek boro
     vector<int>divisor[N];  // i th vector i er shob divisor store korbe
     
-void divisors(){
+void divisors_function(){
     for(int i=2;i < N;i++){               
-        for(int j=i;j< N;j+=i){   
+        for(int j=i;j<N;j+=i){   
         divisor[j].push_back(i);
         } 
     }
 }
     int main(){
     
-      divisors();
+      divisors_function();
     for(int i =1;i<10;i++){
         for(auto div : divisor[i]){
             cout<<div<<" ";
