@@ -129,8 +129,6 @@ struct segtree{
     return calc(l, r, 0, 0, size);
   }
   
-
-  
 };
 
 

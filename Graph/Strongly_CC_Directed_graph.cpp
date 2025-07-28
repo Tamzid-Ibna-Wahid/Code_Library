@@ -73,7 +73,7 @@ void dfs_2(int vertex, vector<int>g[], vector<int>&vis){
     
     for(auto &child : g[vertex]){
          if(vis[child])continue;
-        dfs(child, g, vis);
+        dfs_2(child, g, vis);
     }
   
 }
