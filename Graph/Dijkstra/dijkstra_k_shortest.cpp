@@ -47,70 +47,61 @@ int lcm(int a, int b){ if(a*b==0) return 0; else return a*b/__gcd(a,b);}
 
 std::vector<pair<int,int>>knight ={{-1,2}, {1,2}, {-1,-2}, {1,-2}, {2,-1}, {2,1}, {-2,-1}, {-2,1}};
 
-const int N = 5e5 + 10;
 
 
-// Eular tour type 2
-// use in subtree problem
+const int N = 1e5+10;
+ int n, m, k;
+ 
+vector<pair<int,int>> g[N];
 
+void dijkstra_k_shortest(int source) {
+    vector<vector<ll>> dist(n + 1, vector<ll>(k, INF));
+    priority_queue<pair<ll,int>, vector<pair<ll,int>>, greater<>> pq;
 
-vector<int>g[N];
-bool vis[N];
+    dist[source][0] = 0;
+    pq.push({0, source});
 
-vector<int>flat;
-map<int, pair<int, int>>sub_tree;
+    while (!pq.empty()) {
+        pair<ll,int> top = pq.top();
+        ll d = top.first;
+        int u = top.second;
+        pq.pop();
 
-void dfs(int vertex){
-   
-   // entering the node 
-   flat.pb(vertex);
-   sub_tree[vertex]. first = flat.size()-1;
-    
-    vis[vertex] = true;
+        if (dist[u][k - 1] < d) continue;
 
-    for(int &child : g[vertex]){
-        if(vis[child])continue;
-        dfs(child);
+        for (auto i = 0; i < g[u].size(); i++) {
+            int v = g[u][i].first;
+            int wt = g[u][i].second;
+            ll newDist = d + wt;
+            if (newDist < dist[v][k - 1]) {
+                dist[v][k - 1] = newDist;
+                sort(dist[v].begin(), dist[v].end());
+                pq.push({newDist, v});
+            }
+        }
     }
-    // leaving the node
-    flat.pb(vertex);
-    sub_tree[vertex].second = flat.size()-1;
-}
 
+    // Print 1st to k-th smallest distances to node n
+    for (int i = 0; i < k; i++) {
+        if (dist[n][i] == INF) cout << -1 << " ";
+        else cout << dist[n][i] << " ";
+    }
+    cout << "\n";
+}
 
 
 
 void siuuuuu(){
         
-        int  n;
-        cin>>n;
+        cin>>n>>m>>k;
         
-        for(int i = 0;i<n;i++){
-            int u, v;
-            cin>>u>>v;
-            g[u].pb(v);
-            g[v].pb(u);
-        }   
+        for(int i = 0;i<m;i++){
+            int u, v, w;
+            cin>>u>>v>>w;
+            g[u].pb({v, w});
+        }
         
-        dfs(1);
-      
-
-        
-        
-    int q;
-    cin>>q;
-    
-    while(q--){
-        int x, y;
-        cin>>x>>y;
-        
-        
-        
-    }
-        
-
-// https://cses.fi/problemset/submit/1137/ 
-// https://cses.fi/problemset/task/1138
+        dijkstra_k_shortest(1); 
        
 
 

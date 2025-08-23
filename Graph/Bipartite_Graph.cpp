@@ -34,6 +34,13 @@ void dfs(int vertex, int col){
 }
 
 /*
+
+A bipartite graph is a graph whose vertices can be divided into two disjoint sets, 
+such that every edge connects a vertex from one set to a vertex in the other set. 
+
+In simpler terms, it's a graph where you can color the nodes with two colors in a
+way that no two adjacent nodes share the same color. 
+
  A graph will never be Bipartite if there is a odd length cycle in graph.
  so in question if there ask for finding is there exist odd length cycle or not 
  then we can just check is the graph Bipartite or not.

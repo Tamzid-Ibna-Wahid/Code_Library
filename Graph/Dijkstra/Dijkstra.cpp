@@ -5,7 +5,7 @@ typedef long long ll;
 const int N = 1e5+10;
 const int INF = 1e9+10;
 
-vector<pair<int,int>>g[N];
+vector<vector<pair<int,int>>>g(N);
 
 void dijkstra(int source){
     vector<int>vis(N,0);

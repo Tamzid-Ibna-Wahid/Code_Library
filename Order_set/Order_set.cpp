@@ -2,13 +2,6 @@
 #include<ext/pb_ds/assoc_container.hpp>
 #include<ext/pb_ds/tree_policy.hpp>
 
-
-#ifndef ONLINE_JUDGE
-#include "debug.h"
-#else
-#define deb(x)
-#endif
-
 using namespace std;
 using namespace __gnu_pbds;
 
@@ -83,7 +76,6 @@ void siuuuuu(){
     cout<<endl;
     
     // finding the number of element smaller then x
-    
     cout<<a.order_of_key(6)<<endl;
     cout<<a.order_of_key(100)<<endl;
     cout<<a.order_of_key(0)<<endl;
@@ -94,8 +86,8 @@ void siuuuuu(){
     
     
     // upper bound of x
-    
-    cout<<*a.upper_bound(6)<<endl;
+     // if no upper bound return 0
+    cout<<"upper_bound : "<<*a.upper_bound(40)<<endl;
     
     // remove element
     a.erase(6);

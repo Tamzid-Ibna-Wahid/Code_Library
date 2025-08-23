@@ -2,11 +2,11 @@
 #include "Siuuu.h"
 #else
 #define deb(x)
-
+ 
 #include<bits/stdc++.h>
 #include<ext/pb_ds/assoc_container.hpp>
 #include<ext/pb_ds/tree_policy.hpp>
-
+ 
 using namespace std;
 using namespace __gnu_pbds;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;  // less ,less_equal , greater, greater_equal, cmp, *a.find_by_order() , order_of_key()
@@ -35,31 +35,115 @@ typedef long double lld;
 #define sz(x) ((ll)(x).size()) 
 #define INF 2000000000000000000
 #endif
-
+ 
 const ll mod = 1e9 + 7;
-
+ 
 ll inv(ll i) {if (i == 1) return 1; return (mod - ((mod / i) * inv(mod % i)) % mod) % mod;}
 ll mod_mul(ll a, ll b) {a = a % mod; b = b % mod; return (((a * b) % mod) + mod) % mod;}
 ll mod_add(ll a, ll b) {a = a % mod; b = b % mod; return (((a + b) % mod) + mod) % mod;}
 ll mod_sub(ll a, ll b) {a = a % mod; b = b % mod; return (((a - b + mod) % mod) + mod) % mod;}
 ll ceil_div(ll a, ll b) {return a % b == 0 ? a / b : a / b + 1;}
 int lcm(int a, int b){ if(a*b==0) return 0; else return a*b/__gcd(a,b);}
-
+ 
 std::vector<pair<int,int>>knight ={{-1,2}, {1,2}, {-1,-2}, {1,-2}, {2,-1}, {2,1}, {-2,-1}, {-2,1}};
-
+ 
 const int N = 5e5 + 10;
-
-
+ 
+ 
+typedef int item;
+// struct item{
+//     int m, c;
+// };
+ 
+struct segtree{
+      
+    int size;
+    vector<item>values;
+    
+    item NEUTRAL_ELEMENT = 0;   // change 
+    
+    item merge(item a, item b) {
+        return a + b;            // change 
+    }
+      
+    item single(int v){
+        return v;
+    }
+      
+  
+  void init(int n){
+    size = 1;
+    while(size < n) size *= 2;
+    // values.assign(2 * size , {INT_MAX,0}); 
+    values.resize(2 * size);   // auto initialize with 0
+  }
+  
+  
+  
+  void build(vector<int> &a, int x,int lx,int rx){
+    if(rx - lx == 1){
+      if(lx < a.size()){
+        values[x] = single(a[lx]);
+      }
+      return;
+    }
+    int m = (lx + rx) / 2;
+    build(a , 2 * x+1 , lx , m);
+    build(a , 2 * x+2 , m , rx);
+     values[x] = merge(values[2*x+1],values[2*x+2]);
+  }
+    
+  void build(vector<int> &a){
+    build(a, 0, 0, size);
+  }
+  
+  
+  
+  void set(int i , int v , int x , int lx , int rx){
+    if(rx - lx == 1){
+      values[x] = single(v);
+      return;
+    }
+    int m = (lx + rx) / 2;
+    if(i < m){
+      set(i , v , 2 * x +1 , lx , m);
+    }
+    else{
+      set(i , v , 2 * x + 2, m , rx);
+    }
+         values[x] = merge(values[2*x+1],values[2*x+2]);
+    }
+ 
+    void set(int i, int v){
+      set(i , v, 0, 0, size);
+    }
+    
+  
+  item calc(int l, int r, int x, int lx, int rx){
+    if(lx>=r || l>=rx) return NEUTRAL_ELEMENT;
+    if(lx >= l && rx <= r) return values[x];
+    int m = (lx + rx) / 2;
+    item s1 = calc(l, r, 2 * x + 1, lx, m);
+    item s2 = calc(l, r, 2 * x + 2, m, rx);
+    return merge(s1,s2); 
+  }
+  
+  item calc(int l, int r){
+    return calc(l, r, 0, 0, size);
+  }
+ 
+};
+ 
+ 
+ 
 // Eular tour type 2
 // use in subtree problem
-
-
 vector<int>g[N];
 bool vis[N];
-
+ 
 vector<int>flat;
 map<int, pair<int, int>>sub_tree;
-
+ 
 void dfs(int vertex){
    
    // entering the node 
@@ -67,25 +151,28 @@ void dfs(int vertex){
    sub_tree[vertex]. first = flat.size()-1;
     
     vis[vertex] = true;
-
+ 
     for(int &child : g[vertex]){
         if(vis[child])continue;
         dfs(child);
     }
     // leaving the node
     flat.pb(vertex);
-    sub_tree[vertex].second = flat.size()-1;
+     sub_tree[vertex].second = flat.size()-1;
 }
-
-
-
-
+ 
+ 
+ 
+ 
 void siuuuuu(){
         
-        int  n;
-        cin>>n;
+        int  n, q;
+        cin>>n>>q;
         
-        for(int i = 0;i<n;i++){
+        vint v(n+1);
+        REPsn(i, 1,n)cin>>v[i];
+        
+        for(int i = 0;i<n-1;i++){
             int u, v;
             cin>>u>>v;
             g[u].pb(v);
@@ -93,52 +180,65 @@ void siuuuuu(){
         }   
         
         dfs(1);
-      
-
         
+        for(int i = 0;i<sz(flat);i++){
+            flat[i] = v[flat[i]];
+        }
         
-    int q;
-    cin>>q;
-    
+        segtree st;
+        st.init(sz(flat));
+        st.build(flat);
+ 
+        
     while(q--){
-        int x, y;
-        cin>>x>>y;
+       int t;
+       cin>>t;
+       
+       if(t==1){
+        int node, val;
+        cin>>node>>val;
+        st.set(sub_tree[node].fi, val);
+        st.set(sub_tree[node].se, val);
+       }
+       else{
+        int node;
+        cin>>node;
+        cout<<st.calc(sub_tree[node].fi, sub_tree[node].se + 1) / 2<<endl;
+       }
         
         
         
     }
         
-
-// https://cses.fi/problemset/submit/1137/ 
-// https://cses.fi/problemset/task/1138
        
-
-
-
-
-
-
-
+       
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 }
-
-
-
-
+ 
+ 
+ 
+ 
 signed main(){
-
+ 
  #ifndef ONLINE_JUDGE
 freopen("Error.txt", "w", stderr);
  #endif
-
-
+ 
+ 
      fast_cin();
      cout << fixed;
      cout << setprecision(10);
-
+ 
     int tt;
                 tt=1;
     // cin>>tt;  
-
+ 
    for(int i=1;i<=tt;i++){
         
     //cout<<"Case "<<i<<": ";
@@ -148,3 +248,5 @@ freopen("Error.txt", "w", stderr);
   
     return 0;
 }
+
+//https://cses.fi/problemset/task/1137

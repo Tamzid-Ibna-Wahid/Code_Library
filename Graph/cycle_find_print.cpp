@@ -49,69 +49,69 @@ std::vector<pair<int,int>>knight ={{-1,2}, {1,2}, {-1,-2}, {1,-2}, {2,-1}, {2,1}
 
 const int N = 5e5 + 10;
 
-
-// Eular tour type 2
-// use in subtree problem
-
-
 vector<int>g[N];
-bool vis[N];
+bool cycle = false;
+map<int, int>state;  // 1 - > not visited   2 -> processing    3-> process done
+vector<int>parent(N);
 
-vector<int>flat;
-map<int, pair<int, int>>sub_tree;
 
-void dfs(int vertex){
-   
-   // entering the node 
-   flat.pb(vertex);
-   sub_tree[vertex]. first = flat.size()-1;
-    
-    vis[vertex] = true;
+void reconstract_path(int cycle_start, int cycle_end){
+     vector<int> cycle;
+    cycle.push_back(cycle_start);
+    for (int v = cycle_end; v != cycle_start; v = parent[v]) cycle.push_back(v);
+    cycle.push_back(cycle_start);
 
-    for(int &child : g[vertex]){
-        if(vis[child])continue;
-        dfs(child);
-    }
-    // leaving the node
-    flat.pb(vertex);
-    sub_tree[vertex].second = flat.size()-1;
+        cout <<sz(cycle)<<endl;
+        reverse(all(cycle));
+        for (int v : cycle) cout << v << " ";   
 }
 
+
+
+void dfs(int vertex){
+  
+     state[vertex] = 2;
+
+    for(auto &child : g[vertex]){
+     
+        if(state[child] == 2){
+            cycle = true;
+            reconstract_path(child, vertex);
+            return;
+        }
+        else if(state[child] == 3)continue;
+        parent[child] = vertex;
+        dfs(child);
+        if(cycle)return;
+    }
+    
+     state[vertex] = 3;
+  
+}
 
 
 
 void siuuuuu(){
         
-        int  n;
-        cin>>n;
         
-        for(int i = 0;i<n;i++){
-            int u, v;
-            cin>>u>>v;
-            g[u].pb(v);
-            g[v].pb(u);
-        }   
-        
-        dfs(1);
-      
-
-        
-        
-    int q;
-    cin>>q;
-    
-    while(q--){
-        int x, y;
-        cin>>x>>y;
-        
-        
-        
-    }
-        
-
-// https://cses.fi/problemset/submit/1137/ 
-// https://cses.fi/problemset/task/1138
+       int n, m;
+       cin>>n>>m;
        
+       for(int i = 0;i<m;i++){
+        int u, v;
+        cin>>u>>v;
+        g[u].pb(v);
+       }
+       
+       for(int i = 1;i<=n;i++){
+        if(state[i]>0)continue;
+           dfs(i);
+         if(cycle)return;
+       }
+       
+       if(!cycle){
+        cout<<"IMPOSSIBLE";
+       }
 
 
 

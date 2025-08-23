@@ -17,9 +17,21 @@ int modExp(int a, int n, int M) {
     return res;
 }
 
+
+
+/*
+ (a^b) % M = (a ^ (b % phi(M))) % M
+ if(M=prime) phi(M) = M-1;
+*/
+
+ int Big_power(int a,int b,int c,int M){
+     return  modExp(a ,modExp(b ,c ,M-1), M);
+ }
+
+
+
 int main(){
     
-    cout<<(2,3,mod);
 
     return 0;
 }
