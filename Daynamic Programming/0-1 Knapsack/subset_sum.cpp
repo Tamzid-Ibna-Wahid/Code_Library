@@ -21,6 +21,7 @@ int main(){
         else if(i==0)dp[i][j] = false;
     }
    }     
+   
 
    for(int i=1;i<=n;i++){
     for(int j=1;j<=sum;j++){

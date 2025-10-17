@@ -127,11 +127,27 @@ void siuuuuu(){
         
         D = B * D;
         
-                
+        
         cout<<D.a[0][0]<<endl;
         
         
+       
+       
+       
+       // nth fibonacci Number in log(n)
         
+        int n;
+        cin>>n;
+         Mat A(2,2);
+         
+         // {{1, 1}, {1, 0}}
+         A.a[0][0] = A.a[0][1] = A.a[1][0] = 1;
+         A.a[1][1] = 0;
+         
+         
+       A = A.pow(n);
+       
+       cout<<A.a[0][1]<<endl; 
         
         
        
