@@ -68,7 +68,7 @@ void reconstract_path(int cycle_start, int cycle_end){
 
 
 
-void dfs(int vertex){
+void find_cycle(int vertex){
   
      state[vertex] = 2;
 
@@ -81,7 +81,7 @@ void dfs(int vertex){
         }
         else if(state[child] == 3)continue;
         parent[child] = vertex;
-        dfs(child);
+        find_cycle(child);
         if(cycle)return;
     }
     
@@ -105,7 +105,7 @@ void siuuuuu(){
        
        for(int i = 1;i<=n;i++){
         if(state[i]>0)continue;
-           dfs(i);
+           find_cycle(i);
          if(cycle)return;
        }
        

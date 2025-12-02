@@ -51,14 +51,14 @@ const int N = 5e5 + 10;
 
 stack<int>st;
 
-void dfs(int vertex, vector<int>g[], vector<int>&vis){
+void dfs_1(int vertex, vector<int>g[], vector<int>&vis){
   
     vis[vertex] = true;
 
     for(auto &child : g[vertex]){
      
          if(vis[child])continue;
-        dfs(child, g, vis);
+        dfs_1(child, g, vis);
     }
     st.push(vertex);
 }
@@ -100,7 +100,7 @@ void siuuuuu(){
         
         for(int i = 1;i<=n;i++){
             if(vis[i])continue;
-            dfs(i, adj, vis);
+            dfs_1(i, adj, vis);
         }
         
         fill(all(vis), 0);

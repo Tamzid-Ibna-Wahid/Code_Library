@@ -61,7 +61,6 @@ void dfs(int vertex, stack<int>&st){
         dfs(child, st);
     }
     st.push(vertex);
-  
 }
 
 // Topological sort using dfs
