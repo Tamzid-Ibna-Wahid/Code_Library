@@ -27,7 +27,7 @@ void compute(string str){
 }
 int substringHash(int l,int r){
     int result = dp[r];
-    if (l>0) result -= dp[l-1];
+    if (l > 0) result = (result - dp[l-1] + mod) % mod;
     result = (result * inverse[l]) % mod;
     return result;
 }
