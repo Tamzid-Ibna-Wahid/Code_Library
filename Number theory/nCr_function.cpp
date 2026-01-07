@@ -27,6 +27,9 @@ int nCr(int n, int r) {
    if(n<r)return 0;
     return mod_mul(inv(fact[n-r]), mod_mul(fact[n],inv(fact[r])));
 }
+int nPr(int n, int r){
+    return mod_mul(fact[n], inv(fact[n - r]));
+}
 
 int main(){
 

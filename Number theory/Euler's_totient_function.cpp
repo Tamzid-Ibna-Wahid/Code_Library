@@ -18,8 +18,9 @@ int phi(int n) {
 
 // 1 to n precalculate 
 // O(n log log n)
+vector<int> phi;
 void phi_1_to_n(int n) {
-    vector<int> phi(n + 1);
+    phi.resize( n + 1);
     for (int i = 0; i <= n; i++)
         phi[i] = i;
 

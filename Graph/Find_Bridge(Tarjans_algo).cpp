@@ -51,16 +51,12 @@ const int N = 5e5 + 10;
 
 
 int timer;
-
 void dfs(int node, int parent, vector<int> g[], vector<int>& vis,
     vector<int>& tin, vector<int>& low, vector<pair<int,int>>& bridge){
-        
         vis[node] = 1;
         tin[node] = low[node] = timer++;
-        
         for (auto &it : g[node]) {
             if (it == parent) continue;
-
             if (!vis[it]) {
                 dfs(it, node, g, vis, tin, low, bridge);
                 low[node] = min(low[node], low[it]);
