@@ -22,7 +22,7 @@ typedef long double lld;
 #define vpr vector<pr>
 #define vvint vector<vector<int>>
 #define pr pair<int, int>
-#define REPn(i,n) for(ll i = 0; i < n; i++) 
+#define REPn(i,n) for(ll i = 0; i < n; i++)
 #define REPsn(i,s,n) for(ll i = s; i <= n; i++)
 #define print(arr) for(auto &x: arr)cout<<x<<" ";endl;
 #define fast_cin() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
@@ -30,17 +30,17 @@ typedef long double lld;
 #define no cout<<"NO"<<endl
 #define int long long
 #define em emplace_back
-#define mp make_pair 
-#define pb push_back 
+#define mp make_pair
+#define pb push_back
 #define fi first
 #define se second
 #define all(x) (x).begin(), (x).end()
 #define sum_all(v) accumulate(all(v), 0ll)
-#define sz(x) ((ll)(x).size()) 
+#define sz(x) ((ll)(x).size())
 #define INF 2000000000000000000
 #endif
 
-const ll mod = 1e9 + 7;
+const ll mod = 998244353;
 
 #define _log2(n)   31 - __builtin_clz(n)
 #define pop_count(n)   __builtin_popcountll(n)
@@ -53,68 +53,89 @@ int lcm(int a, int b){ if(a*b==0) return 0; else return a*b/__gcd(a,b);}
 
 std::vector<pair<int,int>>knight = {{-1,2}, {1,2}, {-1,-2}, {1,-2}, {2,-1}, {2,1}, {-2,-1}, {-2,1}};
 std::vector<pair<int, int>>movement = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+int dx[] = {1, -1, 0, 0};
+int dy[] = {0, 0, 1, -1};
 
-const int N = 5e5 + 10;
+const int N = 2e5 + 10;
 
-void build(int n, int m, vector<vvint> &t){
-    for(int k=1;k<=log2(min(n,m));k++){
-        for(int i=0;i+(1<<k)<=n;i++){
-            for(int j=0;j+(1<<k)<=m;j++){
-                t[i][j][k]=min({t[i][j][k-1], t[i+(1<<(k-1))][j][k-1], t[i][j+(1<<(k-1))][k-1], t[i+(1<<(k-1))][j+(1<<(k-1))][k-1]});
-            }
+
+
+// calculate a^n
+int binExp(int a, int n) {
+    int res = 1;
+    while (n > 0) {
+        if (n & 1) {
+            res *= a;
         }
+        a *= a;
+        n >>= 1;
     }
+    return res;
 }
 
-bool quary(int x, int n, int m, vector<vvint> &t){
-     int p = log2(x);
-        for(int i=0;i+x<=n;i++){
-            for(int j=0;j+x<=m;j++){
-                if(min({t[i][j][p], t[i+x-(1<<p)][j+x-(1<<p)][p], t[i][j+x-(1<<p)][p], t[i+x-(1<<p)][j][p]}) >= x){
-                    return true;
-                }
-            }
+
+int sum_of_digit_from_0_to_n(int n){
+    
+        int total_number = n + 1;    
+        int range = 10;
+        int mx_digit = log10(total_number-1) + 1;
+        int ans = 0;
+        for(int i = 1;i <= mx_digit;i++){
+            int e = (total_number%range);
+            int p = range/10;
+            ans += 45 * (total_number/range) * p;
+            int small_block = e/p;
+            ans += (small_block*(small_block-1)/2) * p;  // 0 theke suru tai small_block*(small_block-1)/2
+            ans += small_block * (e%p);
+            range*=10;
         }
-    return false;
+        return ans;
 }
-
 
 
 void siuuuuu(){
-       
-    // i have to find maximum value l such that under l*l square there is no value less then l
-       
-         int n, m;
-         cin>>n>>m;
-         
-         vvint a(n, vint(m));
-         vector<vvint> t(n, vvint(m, vint(10)));
-         
-         for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                cin>>a[i][j];
-                t[i][j][0]=a[i][j];
-            }
+
+         int n;
+         cin>>n;
+
+        int t = n;
+        
+        
+        int d = 9;
+        int i = 1;
+        
+        // k digit diye max kon number porjonto jaoya jay
+        while(t-d*i>=0){
+            t -= d*i;
+            i++;
+            d*=10;
         }
         
-        build(n, m, t);
+        int f = binExp(10, i-1) - 1 + t/i + 1;  // f hocche oi number jeitar kisu part ans e contribute kore
+        t %= i; 
         
-        int l = 1, r = min(n, m);
+        int total_number = f;  // 0  to f - 1;
+
+        int ans = 0;
         
-        while(r-l>1){
-            int x = l + (r-l)/2;
-            
-            if(quary(x,n, m, t))l = x;
-            else r = x - 1;
+        string extra = to_string(f);
+        for(int i = 0;i<t;i++){
+            ans += extra[i] - '0';
         }
         
-       if(quary(r, n, m, t))cout<<r<<endl;
-       else cout<<l<<endl;
-         
-       
+        cout<<ans + sum_of_digit_from_0_to_n(f-1)<<endl;
+        
+        
+// https://codeforces.com/problemset/problem/2132/D
 
 
-// https://codeforces.com/problemset/problem/1731/D
+
+
+
+
+
+
+
 
 
 
@@ -137,14 +158,15 @@ signed main(){
 
     int tt;
                 tt=1;
-    cin>>tt;  
+    cin>>tt;
+
 
    for(int i=1;i<=tt;i++){
-        
+
     //cout<<"Case "<<i<<": ";
-        
-        siuuuuu();          
+
+        siuuuuu();
     }
-  
+
     return 0;
 }

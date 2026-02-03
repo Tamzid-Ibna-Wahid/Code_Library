@@ -95,12 +95,14 @@ void siuuuuu(){
         dfs(1);
       
       
-      /*
-      for finding the LCA of x and y node we have to find the 
-      lowest level node in range a to b index from flat vector
-      a and b are the first occerence index of x and y respectively.
-      we can use segment tree to find the lowest level node withen a range
-      */
+       
+     /*
+      for finding the LCA of x and y node, go to the first occurence of x and
+      first occurence of y. withen this range which node have minimum level will
+      be the lca of x and y. we can use segment tree to find lowest level of the node
+      withen this range
+      */ 
+     
         
         
     int q;
