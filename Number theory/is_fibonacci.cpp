@@ -19,7 +19,6 @@ bool isFibonacci(int n) {
     return (c == n || isPerfectSquare(5 * n * n + 4) || isPerfectSquare(5 * n * n - 4));
 }
 
-
 signed main(){
 
     fast_cin();
